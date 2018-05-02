@@ -9,7 +9,7 @@ Written by Waleed Abdulla
 
 import math
 import numpy as np
-
+from os.path import join
 
 # Base Configuration Class
 # Don't use this class directly. Instead, sub-class it and override
@@ -216,7 +216,7 @@ class Config(object):
     def record(self, logdir):
         """Save config params in logdir
         """
-        fname = os.path.join(logdir, self.NAME + '.txt')
+        fname = join(logdir, self.NAME + '.txt')
         with open(fname, 'w') as f: f.write("Configurations:\n")
         for a in dir(self):
             if not a.startswith("__") and not callable(getattr(self, a)):
