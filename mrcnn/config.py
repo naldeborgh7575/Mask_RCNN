@@ -216,7 +216,7 @@ class Config(object):
     def record(self, logdir):
         """Save config params in logdir
         """
-        fname = join(logdir, self.NAME + '.txt')
+        fname = os.path.join(logdir, self.NAME + '.txt')
         with open(fname, 'w') as f: f.write("Configurations:\n")
         for a in dir(self):
             if not a.startswith("__") and not callable(getattr(self, a)):
