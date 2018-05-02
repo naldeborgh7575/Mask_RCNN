@@ -16,12 +16,12 @@ class BuildingsConfig(Config):
     to the toy shapes dataset.
     """
     # Give the configuration a recognizable name
-    NAME = 'buildings'
+    NAME = 'buildings_test'
 
     TRAIN_DIR = '/home/ubuntu/data/Mask_RCNN/data/samaww_60k/train/'
     VAL_DIR = '/home/ubuntu/data/Mask_RCNN/data/samaww_60k/validation/'
-    MODEL_DIR = '/home/ubuntu/data/Mask_RCNN/models/'
-    RESTORE_FROM = '/home/ubuntu/data/Mask_RCNN/models/mask_rcnn_coco.h5'
+    MODEL_DIR = join('/home/ubuntu/data/Mask_RCNN/experiments/', NAME)
+    RESTORE_FROM = None
     FINE_TUNE = False
 
     GPU_COUNT = 1

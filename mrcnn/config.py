@@ -213,10 +213,10 @@ class Config(object):
                 print("{:30} {}".format(a, getattr(self, a)))
         print("\n")
 
-    def record(self, logdir):
-        """Save config params in logdir
+    def record(self, model_dir):
+        """Save config params in model_dir
         """
-        fname = join(logdir, self.NAME + '.txt')
+        fname = join(model_dir, 'config.txt')
         with open(fname, 'w') as f: f.write("Configurations:\n")
         for a in dir(self):
             if not a.startswith("__") and not callable(getattr(self, a)):
