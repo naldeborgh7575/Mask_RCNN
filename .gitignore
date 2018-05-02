@@ -1,4 +1,5 @@
 data/
+samples/
 models/
 logs/
 .ipynb_checkpoints/
