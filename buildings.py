@@ -3,10 +3,10 @@
 import os
 import re
 import cv2
-import utils
 import numpy as np
 
-from config import Config
+from mrcnn.config import Config
+from mrcnn import utils
 from glob import glob
 from os.path import join
 
@@ -16,7 +16,7 @@ class BuildingsConfig(Config):
     to the toy shapes dataset.
     """
     # Give the configuration a recognizable name
-    NAME = 'buildings_coco'
+    NAME = 'buildings'
 
     TRAIN_DIR = './data/samaww_60k/train/'
     VAL_DIR = './data/samaww_60k/validation/'
