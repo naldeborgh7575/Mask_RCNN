@@ -10,11 +10,10 @@ import gc
 import argparse
 
 from buildings import BuildingDataset, BuildingsConfig
-from config import Config
 from glob import glob
 from os.path import join
-import utils
-import model as modellib
+from mrcnn import utils
+import mrcnn.model as modellib
 
 config = BuildingsConfig()
 

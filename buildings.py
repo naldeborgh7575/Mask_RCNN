@@ -18,10 +18,10 @@ class BuildingsConfig(Config):
     # Give the configuration a recognizable name
     NAME = 'buildings'
 
-    TRAIN_DIR = './data/samaww_60k/train/'
-    VAL_DIR = './data/samaww_60k/validation/'
-    MODEL_DIR = './models/'
-    RESTORE_FROM = './models/mask_rcnn_coco.h5'
+    TRAIN_DIR = '/home/ubuntu/data/Mask_RCNN/data/samaww_60k/train/'
+    VAL_DIR = '/home/ubuntu/data/Mask_RCNN/data/samaww_60k/validation/'
+    MODEL_DIR = '/home/ubuntu/data/Mask_RCNN/models/'
+    RESTORE_FROM = '/home/ubuntu/data/Mask_RCNN/models/mask_rcnn_coco.h5'
     FINE_TUNE = False
 
     GPU_COUNT = 1
