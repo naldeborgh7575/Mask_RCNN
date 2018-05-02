@@ -35,9 +35,12 @@ class BuildingsConfig(Config):
     RPN_ANCHOR_SCALES = (8, 16, 32, 64, 128)  # anchor side in pixels
     TRAIN_ROIS_PER_IMAGE = 120
 
-    STEPS_PER_EPOCH = len(glob(join(TRAIN_DIR, 'buildings/*.png'))) + \
-                      len(glob(join(TRAIN_DIR, 'buildings/*.jpg')))
-    VALIDATION_STEPS = len(glob(join(VAL_DIR, 'buildings/*.png')))
+    TRAIN_SIZE = len(glob(join(TRAIN_DIR, 'buildings/*.png'))) + \
+                 len(glob(join(TRAIN_DIR, 'buildings/*.jpg')))
+    VALIDATION_SIZE = len(glob(join(VAL_DIR, 'buildings/*.png')))
+
+    STEPS_PER_EPOCH = TRAIN_SIZE // (IMAGES_PER_GPU * GPU_COUNT)
+    VALIDATION_STEPS = VALIDATION_SIZE // (IMAGES_PER_GPU * GPU_COUNT)
 
     def record(self, logdir):
         """Save config params in logdir
