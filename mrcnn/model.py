@@ -1013,6 +1013,18 @@ def smooth_l1_loss(y_true, y_pred):
     return loss
 
 
+def jaccard(y_true, y_pred):
+    """Implements Intersection over Union for predictions
+    """
+    import pdb; pdb.set_trace()
+    intersection = len(np.argwhere(y_true == 1) & (y_pred ==1))
+    union = len(np.argwhere(( ((y_pred == 1) & (y_true == 0)) | ((y_pred == 0) & (y_true == 1)) | ((y_pred == 1) & (y_true ==1)) )))
+    try:
+        return float(intersection)/union
+    except ZeroDivisionError:
+        return 0.0
+
+
 def rpn_class_loss_graph(rpn_match, rpn_class_logits):
     """RPN anchor classifier loss.
 
@@ -2306,6 +2318,7 @@ class MaskRCNN():
         log("Checkpoint Path: {}".format(self.checkpoint_path))
         self.set_trainable(layers)
         self.compile(learning_rate, self.config.LEARNING_MOMENTUM)
+        self.config.record(self.log_dir) # write config to log_dir
 
         # Work-around for Windows: Keras fails on Windows when using
         # multiprocessing workers. See discussion here:
