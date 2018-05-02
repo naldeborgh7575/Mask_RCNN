@@ -97,3 +97,4 @@ class BuildingDataset(utils.Dataset):
         """Give +vivid image name for a given image id for debugging
         """
         return self.image_info[image_id]["path"].split('/')[-1]
+
