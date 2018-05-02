@@ -2318,7 +2318,7 @@ class MaskRCNN():
         log("Checkpoint Path: {}".format(self.checkpoint_path))
         self.set_trainable(layers)
         self.compile(learning_rate, self.config.LEARNING_MOMENTUM)
-        self.config.record(self.log_dir) # write config to log_dir
+        self.config.record(self.model_dir) # write config to log_dir
 
         # Work-around for Windows: Keras fails on Windows when using
         # multiprocessing workers. See discussion here:
