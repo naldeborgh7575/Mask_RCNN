@@ -32,6 +32,23 @@ class BuildingsConfig(Config):
     IMAGE_MIN_DIM = 256
     IMAGE_MAX_DIM = 256
 
+    # Learning rate and momentum
+    # The Mask RCNN paper uses lr=0.02, but on TensorFlow it causes
+    # weights to explode. Likely due to differences in optimzer
+    # implementation.
+    LEARNING_RATE = 0.001
+    LEARNING_MOMENTUM = 0.9
+    WEIGHT_DECAY = 0.0001
+
+    # Loss weights for more precise optimization.
+    LOSS_WEIGHTS = {
+        "rpn_class_loss": 1.,
+        "rpn_bbox_loss": 1.,
+        "mrcnn_class_loss": 1.,
+        "mrcnn_bbox_loss": 1.,
+        "mrcnn_mask_loss": 1.
+    }
+
     RPN_ANCHOR_SCALES = (8, 16, 32, 64, 128)  # anchor side in pixels
     TRAIN_ROIS_PER_IMAGE = 120
 
