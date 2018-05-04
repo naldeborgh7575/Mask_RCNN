@@ -27,13 +27,14 @@ class BuildingsConfig(Config):
     GPU_COUNT = 1
     IMAGES_PER_GPU = 8
 
-    # Training schedule: [[layers_1, epochs_1], [layers_2, epochs_2], ...]
+    # Training schedule: [[layers_n, epochs_n, lrfrac_n], ...] n = train step
     # Layer Options:
     #   all: All the layers
     #   3+: Train Resnet stage 3 and up
     #   4+: Train Resnet stage 4 and up
     #   5+: Train Resnet stage 5 and up
-    TRAINING_SCHEDULE = [['all', 100]]
+    # lrfrac = fraction of LEARNING_RATE to use
+    TRAINING_SCHEDULE = [['all', 100, 1]]
     NUM_EPOCHS = sum([i[1] for i in TRAINING_SCHEDULE])
 
     NUM_CLASSES = 2 # includes bg
