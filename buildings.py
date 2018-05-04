@@ -16,24 +16,25 @@ class BuildingsConfig(Config):
     to the toy shapes dataset.
     """
     # Give the configuration a recognizable name
-    NAME = 'buildings_test'
+    NAME = '5418_scratch20k'
 
-    TRAIN_DIR = '/home/ubuntu/data/Mask_RCNN/data/samaww_60k/train/'
-    VAL_DIR = '/home/ubuntu/data/Mask_RCNN/data/samaww_60k/validation/'
-    MODEL_DIR = join('/home/ubuntu/data/Mask_RCNN/experiments/', NAME)
+    TRAIN_DIR = '/home/ubuntu/Mask_RCNN/data/samaww_20k/train/'
+    VAL_DIR = '/home/ubuntu/Mask_RCNN/data/samaww_20k/validation/'
+    MODEL_DIR = join('/home/ubuntu/Mask_RCNN/experiments/', NAME)
     RESTORE_FROM = None
     FINE_TUNE = False
 
     GPU_COUNT = 1
     IMAGES_PER_GPU = 8
 
-    # Training schedule: [[layers_1, epochs_1], [layers_2, epochs_2], ...]
+    # Training schedule: [[layers_n, epochs_n, lrfrac_n], ...] n = train step
     # Layer Options:
     #   all: All the layers
     #   3+: Train Resnet stage 3 and up
     #   4+: Train Resnet stage 4 and up
     #   5+: Train Resnet stage 5 and up
-    TRAINING_SCHEDULE = [['all', 100]]
+    # lrfrac = fraction of LEARNING_RATE to use
+    TRAINING_SCHEDULE = [['all', 100, 1]]
     NUM_EPOCHS = sum([i[1] for i in TRAINING_SCHEDULE])
 
     NUM_CLASSES = 2 # includes bg
@@ -116,4 +117,5 @@ class BuildingDataset(utils.Dataset):
         """Give +vivid image name for a given image id for debugging
         """
         return self.image_info[image_id]["path"].split('/')[-1]
+
 
