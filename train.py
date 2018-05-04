@@ -28,34 +28,19 @@ dataset_val.load_buildings(config.VALIDATION_STEPS, config.VAL_DIR)
 dataset_val.prepare()
 
 # Create model in training mode
-model = modellib.MaskRCNN(mode="training", config=config,
-                        model_dir=config.MODEL_DIR)
+model = modellib.MaskRCNN(mode="training", config=config, model_dir=config.MODEL_DIR)
 
 if config.RESTORE_FROM:
     # Load weights trained on MS COCO, but skip layers that
     # are different due to the different number of classes
     model.load_weights(config.RESTORE_FROM, by_name=True,
-                        exclude=["mrcnn_class_logits", "mrcnn_bbox_fc", 
+                       exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",
                                 "mrcnn_bbox", "mrcnn_mask"])
 
-if config.FINE_TUNE:
-    # Train the head branches
-    # Passing layers="heads" freezes all layers except the head
-    # layers. You can also pass a regular expression to select
-    # which layers to train by name pattern.
-    model.train(dataset_train, dataset_val, 
-                learning_rate=config.LEARNING_RATE, 
-                epochs=config.NUM_EPOCHS, 
-                layers='heads')
-
-else:
-    # Retrain all layers
-    # Passing layers="all" trains all layers. You can also 
-    # pass a regular expression to select which layers to
-    # train by name pattern.
-    model.train(dataset_train, dataset_val, 
-                learning_rate=config.LEARNING_RATE / 10,
-                epochs=config.NUM_EPOCHS, 
-                layers="all")
+for step in config.TRAINING_SCHEDULE:
+    assert(len(step) == 3)
+    model.train(dataset_train, dataset_val,
+                learning_rate=config.LEARNING_RATE/step[-1],
+                epochs=step[1], layers=step[0])
 
 gc.collect() # prevent error upon system exit

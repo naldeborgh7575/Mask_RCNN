@@ -27,7 +27,15 @@ class BuildingsConfig(Config):
     GPU_COUNT = 1
     IMAGES_PER_GPU = 8
 
-    NUM_EPOCHS = 100
+    # Training schedule: [[layers_1, epochs_1], [layers_2, epochs_2], ...]
+    # Layer Options:
+    #   all: All the layers
+    #   3+: Train Resnet stage 3 and up
+    #   4+: Train Resnet stage 4 and up
+    #   5+: Train Resnet stage 5 and up
+    TRAINING_SCHEDULE = [['all', 100]]
+    NUM_EPOCHS = sum([i[1] for i in TRAINING_SCHEDULE])
+
     NUM_CLASSES = 2 # includes bg
     IMAGE_MIN_DIM = 256
     IMAGE_MAX_DIM = 256
@@ -49,7 +57,8 @@ class BuildingsConfig(Config):
         "mrcnn_mask_loss": 1.
     }
 
-    RPN_ANCHOR_SCALES = (8, 16, 32, 64, 128)  # anchor side in pixels
+    RPN_ANCHOR_SCALES = (8, 16, 32, 64, 128)  # square anchor side in pixels
+    RPN_ANCHOR_RATIOS = [0.5, 1, 2]
     TRAIN_ROIS_PER_IMAGE = 120
 
     TRAIN_SIZE = len(glob(join(TRAIN_DIR, 'buildings/*.png'))) + \
