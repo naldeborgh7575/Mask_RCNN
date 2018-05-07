@@ -23,6 +23,7 @@ class BuildingsConfig(Config):
     MODEL_DIR = join('/home/ubuntu/Mask_RCNN/experiments/', NAME)
     RESTORE_FROM = None
     FINE_TUNE = False
+    OPTIMIZER = 'sgd' # sgd or adam
 
     GPU_COUNT = 1
     IMAGES_PER_GPU = 8
@@ -48,6 +49,10 @@ class BuildingsConfig(Config):
     LEARNING_RATE = 0.001
     LEARNING_MOMENTUM = 0.9
     WEIGHT_DECAY = 0.0001
+    LR_DECAY = 0.0
+
+    # Backbone: resnet 101 or resnet 50
+    BACKBONE = "resnet50"
 
     # Loss weights for more precise optimization.
     LOSS_WEIGHTS = {

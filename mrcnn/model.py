@@ -2139,9 +2139,15 @@ class MaskRCNN():
         metrics. Then calls the Keras compile() function.
         """
         # Optimizer object
-        optimizer = keras.optimizers.SGD(
-            lr=learning_rate, momentum=momentum,
-            clipnorm=self.config.GRADIENT_CLIP_NORM)
+        if self.config.OPTIMIZER == 'sgd':
+            optimizer = keras.optimizers.SGD(
+                lr=learning_rate, momentum=momentum, decay=self.config.LR_DECAY,
+                clipnorm=self.config.GRADIENT_CLIP_NORM)
+        elif self.config.OPTIMIZER == 'adam':
+            optimizer = keras.optimizers.adam(
+                lr=learning_rate, beta_1=0.9, beta_2=0.999, decay=self.config.LR_DECAY,
+                epsilon=1e-08, clipnorm=self.config.GRADIENT_CLIP_NORM)
+            
         # Add Losses
         # First, clear previously set losses to avoid duplication
         self.keras_model._losses = []
@@ -2311,7 +2317,7 @@ class MaskRCNN():
         callbacks = [
             keras.callbacks.TensorBoard(log_dir=self.log_dir,
                                         histogram_freq=0, write_graph=True, write_images=False),
-            keras.callbacks.ModelCheckpoint(self.checkpoint_path, save_best_only=True,
+            keras.callbacks.ModelCheckpoint(self.checkpoint_path, save_best_only=False,
                                             verbose=0, save_weights_only=True),
         ]
 
