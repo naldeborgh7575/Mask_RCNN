@@ -53,7 +53,7 @@ class BuildingsConfig(Config):
     LR_DECAY = 0.0
 
     # Backbone: resnet 101 or resnet 50
-    BACKBONE = "resnet50"
+    BACKBONE = "resnet101"
 
     # Loss weights for more precise optimization.
     LOSS_WEIGHTS = {
