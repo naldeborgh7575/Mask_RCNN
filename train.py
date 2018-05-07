@@ -4,6 +4,7 @@ import random
 import math
 import re
 import time
+import imgaug
 import numpy as np
 import cv2
 import gc
@@ -27,6 +28,15 @@ dataset_val = BuildingDataset()
 dataset_val.load_buildings(config.VALIDATION_STEPS, config.VAL_DIR)
 dataset_val.prepare()
 
+# Define augmentation
+if config.AUGMENTATION:
+    augmentation = imgaug.augmenters.Sometimes(0.5, [
+        imgaug.augmenters.Fliplr(0.5),
+        imgaug.augmenters.Flipud(0.5),
+        imgaug.augmenters.GaussianBlur(sigma=(0.0, 5.0))
+    ])
+else: augmentation = None
+
 # Create model in training mode
 model = modellib.MaskRCNN(mode="training", config=config, model_dir=config.MODEL_DIR)
 
@@ -41,6 +51,6 @@ for step in config.TRAINING_SCHEDULE:
     assert(len(step) == 3)
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE/step[-1],
-                epochs=step[1], layers=step[0])
+                epochs=step[1], layers=step[0], augmentation=augmentation)
 
 gc.collect() # prevent error upon system exit

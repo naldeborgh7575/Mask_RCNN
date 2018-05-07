@@ -24,6 +24,7 @@ class BuildingsConfig(Config):
     RESTORE_FROM = None
     FINE_TUNE = False
     OPTIMIZER = 'sgd' # sgd or adam
+    AUGMENTATION = False
 
     GPU_COUNT = 1
     IMAGES_PER_GPU = 8
