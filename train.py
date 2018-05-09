@@ -9,6 +9,7 @@ import numpy as np
 import cv2
 import gc
 import argparse
+import subprocess
 
 from buildings import BuildingDataset, BuildingsConfig
 from glob import glob
@@ -54,3 +55,13 @@ for step in config.TRAINING_SCHEDULE:
                 epochs=step[1], layers=step[0], augmentation=augmentation)
 
 gc.collect() # prevent error upon system exit
+
+# upload to s3
+command = 'aws s3 sync ~/Mask_RCNN/experiments/ s3://nja-data/Mask_RCNN/experiments/'
+proc = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+out, err = proc.communicate()
+
+# Shutdown instance
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'shutdown':
+        subprocess.Popen(['sudo shutdown -h now'], shell=True)
