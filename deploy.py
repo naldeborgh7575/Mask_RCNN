@@ -39,7 +39,7 @@ config = BuildingsConfig()
 weights = sys.argv[1]
 base = join('/'.join(weights.split('/')[:-2]), 'deploy-results')
 dataset = BuildingDataset()
-dataset.load_buildings(500, sys.argv[2], 256) #count (500) is ignored
+dataset.load_buildings(sys.argv[2], 256) #count (500) is ignored
 dataset.prepare()
 print("Images: {}\nClasses: {}".format(len(dataset.image_ids), dataset.class_names))
 
