@@ -63,4 +63,8 @@ for id_ix in tqdm(range(0,len(dataset.image_ids),config.BATCH_SIZE)):
         plt_cat(imgs[rix], mi, img_name)
 
 
+<<<<<<< HEAD
 gc.collect() # prevent error upon system exit
+=======
+gc.collect() # prevent error upon system exit
+>>>>>>> 1f352c4ff0bb741f3a0890351299984ef31a013e

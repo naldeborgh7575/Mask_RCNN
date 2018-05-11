@@ -97,6 +97,8 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     figsize: (optional) the size of the image
     colors: (optional) An array or colors to use with each object
     captions: (optional) A list of strings to use as captions for each object
+    return_masked_image: (optional) Return the masked image instead of
+        displaying 
     """
     # Number of instances
     N = boxes.shape[0]
