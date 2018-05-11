@@ -80,9 +80,8 @@ class BuildingDataset(utils.Dataset):
     """Generates the buildings dataset
     """
 
-    def load_buildings(self, count, data_dir, side_dim=256):
+    def load_buildings(self, data_dir, side_dim=256):
         """Generate the requested number of synthetic images.
-        count: number of images to generate.
         data_dir: location of data. should have two subdirectories
             'buildings' (with images) and 'masks' (with masks)
         side_dim: the size of the generated images.
