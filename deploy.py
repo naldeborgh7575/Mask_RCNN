@@ -20,7 +20,6 @@ import mrcnn.model as modellib
 def plt_cat(img, pred, save_to):
     """plot original image next to prediction (array)
     """
-    import  pdb;pdb.set_trace()
     base = '/'.join(save_to.split('/')[:-1])
     plt.figure(1)
     plt.subplot(121)
@@ -64,4 +63,8 @@ for id_ix in tqdm(range(0,len(dataset.image_ids),config.BATCH_SIZE)):
         plt_cat(imgs[rix], mi, img_name)
 
 
+<<<<<<< HEAD
 gc.collect() # prevent error upon system exit
+=======
+gc.collect() # prevent error upon system exit
+>>>>>>> 1f352c4ff0bb741f3a0890351299984ef31a013e
