@@ -8,6 +8,7 @@ Written by Waleed Abdulla
 """
 
 import math
+import pickle
 import numpy as np
 from os.path import join
 
@@ -214,7 +215,7 @@ class Config(object):
         print("\n")
 
     def record(self, model_dir):
-        """Save config params in model_dir
+        """Save config params in model_dir as text file and pickle
         """
         fname = join(model_dir, 'config.txt')
         with open(fname, 'w') as f: f.write("Configurations:\n")
@@ -222,3 +223,5 @@ class Config(object):
             if not a.startswith("__") and not callable(getattr(self, a)):
                 with open(fname, 'a') as f: 
                     f.write("{:30} {}\n".format(a, getattr(self, a)))
+        with open(join(model_dir, 'config.pkl'), 'wb') as f:
+            pickle.dump(self, f)
