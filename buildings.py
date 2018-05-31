@@ -19,9 +19,9 @@ class BuildingsConfig(Config):
     # Give the configuration a recognizable name
     NAME = '53118augc10k'
 
-    DATA_DIR = '~/data/Mask_RCNN/data/sama_d5.csv'
-    MODEL_DIR = join('/home/ubuntu/Mask_RCNN/experiments/', NAME)
-    RESTORE_FROM = '/home/ubuntu/Mask_RCNN/experiments/5418_crowdai20k'
+    DATA_DIR = '/home/ubuntu/data/Mask_RCNN/data/sama_d5.csv'
+    MODEL_DIR = join('/home/ubuntu/data/Mask_RCNN/experiments/', NAME)
+    RESTORE_FROM = '/home/ubuntu/data/Mask_RCNN/pretrained_weights/crowdai.h5'
     FINE_TUNE = False
     OPTIMIZER = 'sgd' # sgd or adam
     AUGMENTATION = True
