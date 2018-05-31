@@ -93,7 +93,9 @@ class BuildingDataset(utils.Dataset):
         # Add images
         self.tvdata = pd.read_csv(data)
 
-        im_paths = self.tvdata['image'][self.tvdata['set']=='val' if validation else 'tr']
+        if validation: im_paths = self.tvdata['image'][self.tvdata['set']=='val']
+        else: im_paths = self.tvdata['image'][self.tvdata['set']=='tr']
+
         for ix, path in zip(im_paths.index, im_paths):
             self.add_image("buildings", image_id=ix, path=path,
                            width=side_dim, height=side_dim, bg_color=np.array([0,0,0]))
