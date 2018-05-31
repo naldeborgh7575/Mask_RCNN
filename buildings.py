@@ -69,8 +69,8 @@ class BuildingsConfig(Config):
     TRAIN_ROIS_PER_IMAGE = 120
 
     train_set = pd.read_csv(DATA_DIR)
-    TRAIN_SIZE = len(train_set[strain_set['set'] == 'tr'])
-    VALIDATION_SIZE = len(train_set[strain_set['set'] == 'val'])
+    TRAIN_SIZE = len(train_set[train_set['set'] == 'tr'])
+    VALIDATION_SIZE = len(train_set[train_set['set'] == 'val'])
 
     STEPS_PER_EPOCH = TRAIN_SIZE // (IMAGES_PER_GPU * GPU_COUNT)
     VALIDATION_STEPS = VALIDATION_SIZE // (IMAGES_PER_GPU * GPU_COUNT)
