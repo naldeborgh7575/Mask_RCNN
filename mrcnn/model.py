@@ -1637,7 +1637,6 @@ def generate_random_rois(image_shape, count, gt_class_ids, gt_boxes):
     rois[-remaining_count:] = global_rois
     return rois
 
-
 def data_generator(dataset, config, shuffle=True, augment=False, augmentation=None,
                    random_rois=0, batch_size=1, detection_targets=False):
     """A generator that returns images and corresponding target class ids,
