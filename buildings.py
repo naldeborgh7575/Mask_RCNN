@@ -17,15 +17,14 @@ class BuildingsConfig(Config):
     to the toy shapes dataset.
     """
     # Give the configuration a recognizable name
-    NAME = '5418_scratch20k'
+    NAME = '53118augc10k'
 
-    TRAIN_DIR = '/home/ubuntu/Mask_RCNN/data/samaww_20k/train/'
-    VAL_DIR = '/home/ubuntu/Mask_RCNN/data/samaww_20k/validation/'
+    DATA_DIR = '~/data/Mask_RCNN/data/sama_d5.csv'
     MODEL_DIR = join('/home/ubuntu/Mask_RCNN/experiments/', NAME)
-    RESTORE_FROM = None
+    RESTORE_FROM = '/home/ubuntu/Mask_RCNN/experiments/5418_crowdai20k'
     FINE_TUNE = False
     OPTIMIZER = 'sgd' # sgd or adam
-    AUGMENTATION = False
+    AUGMENTATION = True
 
     GPU_COUNT = 1
     IMAGES_PER_GPU = 8
@@ -37,7 +36,7 @@ class BuildingsConfig(Config):
     #   4+: Train Resnet stage 4 and up
     #   5+: Train Resnet stage 5 and up
     # lrfrac = fraction of LEARNING_RATE to use
-    TRAINING_SCHEDULE = [['all', 100, 1]]
+    TRAINING_SCHEDULE = [['heads',1,1],['4+',10,1],['all', 40, 10]]
     NUM_EPOCHS = sum([i[1] for i in TRAINING_SCHEDULE])
 
     NUM_CLASSES = 2 # includes bg
@@ -69,9 +68,9 @@ class BuildingsConfig(Config):
     RPN_ANCHOR_RATIOS = [0.5, 1, 2]
     TRAIN_ROIS_PER_IMAGE = 120
 
-    TRAIN_SIZE = len(glob(join(TRAIN_DIR, 'buildings/*.png'))) + \
-                 len(glob(join(TRAIN_DIR, 'buildings/*.jpg')))
-    VALIDATION_SIZE = len(glob(join(VAL_DIR, 'buildings/*.png')))
+    train_set = pd.read_csv(DATA_DIR)
+    TRAIN_SIZE = len(train_set[strain_set['set'] == 'tr'])
+    VALIDATION_SIZE = len(train_set[strain_set['set'] == 'val'])
 
     STEPS_PER_EPOCH = TRAIN_SIZE // (IMAGES_PER_GPU * GPU_COUNT)
     VALIDATION_STEPS = VALIDATION_SIZE // (IMAGES_PER_GPU * GPU_COUNT)
