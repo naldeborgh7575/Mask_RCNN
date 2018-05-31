@@ -21,12 +21,12 @@ config = BuildingsConfig()
 
 # Training dataset
 dataset_train = BuildingDataset()
-dataset_train.load_buildings(config.TRAIN_DIR)
+dataset_train.load_buildings(config.DATA_DIR, validation=False)
 dataset_train.prepare()
 
 # Validation dataset
 dataset_val = BuildingDataset()
-dataset_val.load_buildings(config.VAL_DIR)
+dataset_val.load_buildings(config.DATA_DIR, validation=True)
 dataset_val.prepare()
 
 # Define augmentation
