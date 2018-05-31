@@ -4,6 +4,7 @@ import os
 import re
 import cv2
 import numpy as np
+import pandas as pd
 
 from mrcnn.config import Config
 from mrcnn import utils
@@ -80,18 +81,21 @@ class BuildingDataset(utils.Dataset):
     """Generates the buildings dataset
     """
 
-    def load_buildings(self, data_dir, side_dim=256):
-        """Generate the requested number of synthetic images.
-        data_dir: location of data. should have two subdirectories
-            'buildings' (with images) and 'masks' (with masks)
+    def load_buildings(self, data, side_dim=256, validation=False):
+        """Generate the requested number of images.
+        data: csv of file paths, requires mask, image, set 
+            columns. set is val or tr. mask and image have full
+            path.
         side_dim: the size of the generated images.
         """
         # Add classes
         self.add_class("buildings", 1, "building")
 
         # Add images
-        im_paths = [join(data_dir, 'buildings', i) for i in os.listdir(join(data_dir, 'buildings'))]
-        for ix, path in enumerate(im_paths):
+        self.tvdata = pd.read_csv(data)
+
+        im_paths = self.tvdata['images'][self.tvdata=='val' if validation else 'tr']
+        for ix, path in zip(im_paths.index, im_paths):
             self.add_image("buildings", image_id=ix, path=path,
                            width=side_dim, height=side_dim, bg_color=np.array([0,0,0]))
 
@@ -103,8 +107,7 @@ class BuildingDataset(utils.Dataset):
         returns array [h, w, instances]
         """
         image_info = self.image_info[image_id]
-        mask = cv2.imread(re.sub("buildings/", "masks/",
-                                 image_info["path"]))
+        mask = cv2.imread(self.tvdata['mask'][image_id])
         instances = sorted(np.unique(mask))[1:]
 
         # Reformat mask
