@@ -2302,7 +2302,7 @@ class MaskRCNN():
             "all": ".*",
         }
         if layers in layer_regex.keys():
-            print('\nLoading layers: \n' + layers)
+            print('\nLoading layers: {}\n'.format(layers))
             layers = layer_regex[layers]
 
         # Data generators
