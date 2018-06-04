@@ -92,11 +92,12 @@ class BuildingDataset(utils.Dataset):
 
         # Add images
         self.tvdata = pd.read_csv(data)
+        self.val = validation
 
-        if validation: im_paths = self.tvdata['image'][self.tvdata['set']=='val']
-        else: im_paths = self.tvdata['image'][self.tvdata['set']=='tr']
+        if validation: im_paths = list(self.tvdata['image'][self.tvdata['set']=='val'])
+        else: im_paths = list(self.tvdata['image'][self.tvdata['set']=='tr'])
 
-        for ix, path in zip(im_paths.index, im_paths):
+        for ix, path in enumerate(im_paths):
             self.add_image("buildings", image_id=ix, path=path,
                            width=side_dim, height=side_dim, bg_color=np.array([0,0,0]))
 
@@ -107,8 +108,11 @@ class BuildingDataset(utils.Dataset):
         image_id: image id assigned in load_buildings
         returns array [h, w, instances]
         """
+        if self.val: im_paths = list(self.tvdata['mask'][self.tvdata['set']=='val'])
+        else: im_paths = list(self.tvdata['mask'][self.tvdata['set']=='tr'])
+
         image_info = self.image_info[image_id]
-        mask = cv2.imread(self.tvdata['mask'][image_id])
+        mask = cv2.imread(im_paths[image_id])
         instances = sorted(np.unique(mask))[1:]
 
         # Reformat mask
